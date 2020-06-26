@@ -19,3 +19,24 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 # THE SOFTWARE.
 #==============================================================================
+
+SRCROOT := ../
+SUBDIRS	:= init
+CSRC	:=
+ASRC	:=
+LIBRARY :=
+INC		+= -I./include
+
+.PHONY: all clean
+
+include $(SRCROOT)/MAKE/RULES.MAK 
+
+all: $(SUBDIRS)
+
+include $(SRCROOT)/MAKE/TARGETS.MAK
+
+clean:
+
+
+
+

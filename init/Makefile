@@ -19,3 +19,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 # THE SOFTWARE.
 #==============================================================================
+
+SRCROOT := ../../		# Need to start passing this in.
+
+CSRC	:= osinit.c
+ASRC	:=
+LIBRARY := uKinit
+INC		+= -I./include
+
+.PHONY: all clean
+
+include $(SRCROOT)/MAKE/RULES.MAK 
+
+all: $(SUBDIRS)
+
+include $(SRCROOT)/MAKE/TARGETS.MAK
+
+clean:
+
