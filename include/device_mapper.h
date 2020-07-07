@@ -19,26 +19,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 // THE SOFTWARE.
 //==============================================================================
+#ifndef __DEVICE_MANAGER_H__
+#define __DEVICE__H__
 
-extern void platformInit(void);
+#include "bsp_config.h"
+#include "platform_config.h"
 
-void OsInit(void)
-{
 
-    platformInit();
+typedef uKDriver_t* _kDevice;
 
-//  __ukEventsInit();               // ARC specific code
-//  __ukProcessManagementInit();    // SHOULD BE GENERIC
-//
-//  
-//   // process_create(8, idleProc, &__idle_stack__);
-//    platform_start_cpus();
+extern _kDevice _uDeviceList [NUM_KERNEL_DEVICES + NUM_BSP_DEVICES + NUM_DYNAMIC_DEVICES];
 
-//  appInit();
+#define _uKDeviceControl(deviceID, buffer, size)    _ukDeviceList[deviceId]->write(buffer, size)
+#define _uKDeviceWrite(deviceID, buffer, size)      _ukDeviceList[deviceId]->write(buffer, size);
+#define _uKDeviceRead(deviceID, buffer, size)       _ukDeviceList[deviceId]->read(buffer, size);
 
-//    cpu_id_t id = arc_get_cpu_id();
-//    dm_DispatchProcess(id);
-
-    // we should never get here, but we will hang here just in case. 
-    while(1){}
-}
+#endif

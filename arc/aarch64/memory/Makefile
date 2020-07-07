@@ -21,14 +21,15 @@
 #==============================================================================
 
 # Need to start passing this in.
-SUBDIRS := memory
-CSRC	:= 
+CSRC	:= mmu.c
 ASRC	:=
+LIBRARY := 
+INC		+= -I../include
 
 include $(SRCROOT)/MAKE/RULES.MAK 
 
 .PHONY: all clean
-all: $(SUBDIRS)
+all: $(LIBRARY)
 
 include $(SRCROOT)/MAKE/TARGETS.MAK
 

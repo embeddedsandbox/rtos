@@ -20,11 +20,11 @@
 # THE SOFTWARE.
 #==============================================================================
 
-SRCROOT := ../
-SUBDIRS	:= init
+LIBRARY := $(BUILDROOT)/librtos.a
+SUBDIRS	:= init arc/$(ARC)
 CSRC	:=
 ASRC	:=
-LIBRARY :=
+
 INC		+= -I./include
 
 .PHONY: all clean
@@ -35,7 +35,7 @@ all: $(SUBDIRS)
 
 include $(SRCROOT)/MAKE/TARGETS.MAK
 
-clean:
+clean: local_clean_lib
 
 
 

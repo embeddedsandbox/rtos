@@ -19,26 +19,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 // THE SOFTWARE.
 //==============================================================================
+#ifndef __TYPES_H__
+#define __TYPES_H__
 
-extern void platformInit(void);
+#include <stddef.h>
+#include <stdint.h>
+#include "status.h"
+/*
+typedef unsigned long long  uint64_t;
+typedef unsigned int        uint32_t;
+typedef unsigned short      uint16_t;
+typedef unsigned char       uint8_t;
+*/
+typedef _Bool   bool;
+#define true    (1)
+#define false   (0)
 
-void OsInit(void)
-{
+#define _dmb()  {__asm("    dmb \n");}
+#define _brk()  {__asm("    B   .\n");}
 
-    platformInit();
+#define ASSERT(x)  while (!(x)){}
 
-//  __ukEventsInit();               // ARC specific code
-//  __ukProcessManagementInit();    // SHOULD BE GENERIC
-//
-//  
-//   // process_create(8, idleProc, &__idle_stack__);
-//    platform_start_cpus();
-
-//  appInit();
-
-//    cpu_id_t id = arc_get_cpu_id();
-//    dm_DispatchProcess(id);
-
-    // we should never get here, but we will hang here just in case. 
-    while(1){}
-}
+#endif

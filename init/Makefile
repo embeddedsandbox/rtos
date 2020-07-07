@@ -20,20 +20,16 @@
 # THE SOFTWARE.
 #==============================================================================
 
-SRCROOT := ../../		# Need to start passing this in.
-
+# Need to start passing this in.
 CSRC	:= osinit.c
 ASRC	:=
-LIBRARY := uKinit
 INC		+= -I./include
-
-.PHONY: all clean
 
 include $(SRCROOT)/MAKE/RULES.MAK 
 
-all: $(SUBDIRS)
+.PHONY: all clean
+all: $(LIBRARY)
 
 include $(SRCROOT)/MAKE/TARGETS.MAK
 
 clean:
-

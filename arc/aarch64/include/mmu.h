@@ -20,25 +20,10 @@
 // THE SOFTWARE.
 //==============================================================================
 
-extern void platformInit(void);
 
-void OsInit(void)
-{
+//=============================================================================
+//  MMU Table Pool types and defines.   
+//=============================================================================
+void MmuInit(uintptr_t tablePoolStart, uintptr_t tablePoolSize);
+void MmuMapRange(uintptr_t PageVirtAddr, uintptr_t PagePhysAddress, uintptr_t RegionsSize, uintptr_t pageTypeIndex, uintptr_t attributes);
 
-    platformInit();
-
-//  __ukEventsInit();               // ARC specific code
-//  __ukProcessManagementInit();    // SHOULD BE GENERIC
-//
-//  
-//   // process_create(8, idleProc, &__idle_stack__);
-//    platform_start_cpus();
-
-//  appInit();
-
-//    cpu_id_t id = arc_get_cpu_id();
-//    dm_DispatchProcess(id);
-
-    // we should never get here, but we will hang here just in case. 
-    while(1){}
-}
