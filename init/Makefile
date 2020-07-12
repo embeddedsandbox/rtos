@@ -32,4 +32,4 @@ all: $(LIBRARY)
 
 include $(SRCROOT)/MAKE/TARGETS.MAK
 
-clean:
+clean: local_clean_objs

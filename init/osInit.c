@@ -24,7 +24,7 @@ extern void platformInit(void);
 
 void OsInit(void)
 {
-
+    __asm(" B    . \n");
     platformInit();
 
 //  __ukEventsInit();               // ARC specific code

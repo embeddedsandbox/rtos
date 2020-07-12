@@ -35,7 +35,7 @@ all: $(SUBDIRS)
 
 include $(SRCROOT)/MAKE/TARGETS.MAK
 
-clean: local_clean_lib
+clean: subdir_clean
 
 
 

@@ -32,4 +32,4 @@ all: $(SUBDIRS)
 
 include $(SRCROOT)/MAKE/TARGETS.MAK
 
-clean:
+clean: subdir_clean local_clean_objs

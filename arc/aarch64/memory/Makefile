@@ -29,8 +29,8 @@ INC		+= -I../include
 include $(SRCROOT)/MAKE/RULES.MAK 
 
 .PHONY: all clean
-all: $(LIBRARY)
+all: LIBRARY $(SUBDIRS) $(AOBJS)
 
 include $(SRCROOT)/MAKE/TARGETS.MAK
 
-clean:
+clean: local_clean_objs

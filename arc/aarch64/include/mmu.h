@@ -21,9 +21,17 @@
 //==============================================================================
 
 
+typedef enum 
+{
+    MEM_REGION_NORMAL_MEM_CACHEABLE,
+    MEM_REGION_NORMAL_MEM_NONCACHEABLE,
+    MEM_REGION_DEVICE_IO
+} memoryRegionType_t;
+
+
 //=============================================================================
 //  MMU Table Pool types and defines.   
 //=============================================================================
 void MmuInit(uintptr_t tablePoolStart, uintptr_t tablePoolSize);
-void MmuMapRange(uintptr_t PageVirtAddr, uintptr_t PagePhysAddress, uintptr_t RegionsSize, uintptr_t pageTypeIndex, uintptr_t attributes);
-
+void MmuMapRange(uintptr_t PageVirtAddr, uintptr_t PagePhysAddress, uintptr_t RegionsSize, memoryRegionType_t regionType);
+void MmuEnable(void);
