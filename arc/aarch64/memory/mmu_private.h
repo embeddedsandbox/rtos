@@ -40,7 +40,7 @@ typedef union
         uint64_t    reserved0           :   1;  // [11]
         /*------------------------------------------------*/
         uint64_t    address             :  36;  // [12:47]
-        uint64_t    reserved2           :   4;  // [48:52]
+        uint64_t    reserved2           :   5;  // [48:52]
         uint64_t    privExecNever       :   1;  // [53]
         uint64_t    unprivExecNever     :   1;  // [54]
         uint64_t    softwareUse         :   4;  // [55:58]
@@ -52,7 +52,8 @@ typedef union
 typedef  mmuDescriptor_t* mmuPageHandle_t;
 
 #define MMU_DESC_TYPE_TABLE_DESC                (0x3)
-#define MMU_DESC_TYPE_BLOCK_DESC                (0x3)
+#define _MMU_DESC_TYPE_BLOCK_DESC                (0x1)
+#define MMU_DESC_TYPE_PAGE_DESC                (0x3)
 
 //#define MMU_DESC_TYPE_L1_L2_BLOCK_DESC          (0x1)
 //#define MMU_DESC_TYPE_L3_BLOCK_DESC             (0x1)
@@ -70,7 +71,7 @@ typedef  mmuDescriptor_t* mmuPageHandle_t;
 // Index 5  -- Normal Memory Non-Cacheable (Reserved for future use)
 // Index 6  -- Normal Memory Non-Cacheable (Reserved for future use)
 // Index 7  -- Normal Memory Non-Cacheable (Reserved for future use)
-#define MAIR_EL1_MAP                            ((0x04LL<<16) | (0x44LL<<8) |  (0xFFLL))  //  Note 0x77 should also be Write Back and seems to get us to a fault of 
+#define MAIR_EL1_MAP                            ((0x00LL<<16) | (0x44LL<<8) |  (0xFFLL))  //  Note 0x77 should also be Write Back and seems to get us to a fault of 
 #define MMU_MAIR_IDX_NORMAL_MEM_CACHEABLE       (0x0)
 #define MMU_MAIR_IDX_NORMAL_MEM_NONCACHEABLE    (0x1)
 #define MMU_MAIR_IDX_DEVICE_MEM                 (0x2)
@@ -85,11 +86,11 @@ typedef  mmuDescriptor_t* mmuPageHandle_t;
 #define MMU_DESC_SHARE_INNER                    (0x3)
 
 #define MMU_TABLE_DESC                                      (mmuDescriptor_t){.descType = MMU_DESC_TYPE_TABLE_DESC, .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_CACHEABLE,    .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_INNER, .accessedFlag = 1, .address = 0, .privExecNever = 0, .unprivExecNever = 0, .softwareUse = 0  }
-#define MMU_BLOCK_DESC_MEM_PRIVILEGED_SECURE_CACHEABLE      (mmuDescriptor_t){.descType = MMU_DESC_TYPE_BLOCK_DESC, .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_CACHEABLE,    .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_INNER, .accessedFlag = 1, .address = 0, .privExecNever = 0, .unprivExecNever = 0, .softwareUse = 0  }
-#define MMU_BLOCK_DESC_MEM_PRIVILEGED_SECURE_NONCACHEABLE   (mmuDescriptor_t){.descType = MMU_DESC_TYPE_BLOCK_DESC, .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_NONCACHEABLE, .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_NONE,  .accessedFlag = 1, .address = 0, .privExecNever = 1, .unprivExecNever = 1, .softwareUse = 0  }
-#define MMU_BLOCK_DESC_MEM_UNPRIVILEGED_SECURE_CACHEABLE    (mmuDescriptor_t){.descType = MMU_DESC_TYPE_BLOCK_DESC, .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_CACHEABLE,    .notSecure = 0, .accessPerission = MMU_DESC_AP_RW_RW,       .shareability = MMU_DESC_SHARE_INNER, .accessedFlag = 1, .address = 0, .privExecNever = 0, .unprivExecNever = 0, .softwareUse = 0  }
-#define MMU_BLOCK_DESC_MEM_UNPRIVILEGED_SECURE_NONCACHEABLE (mmuDescriptor_t){.descType = MMU_DESC_TYPE_BLOCK_DESC, .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_NONCACHEABLE, .notSecure = 0, .accessPerission = MMU_DESC_AP_RW_RW,       .shareability = MMU_DESC_SHARE_NONE,  .accessedFlag = 1, .address = 0, .privExecNever = 1, .unprivExecNever = 1, .softwareUse = 0  }
-#define MMU_BLOCK_DESC_DEVICE_MEM                           (mmuDescriptor_t){.descType = MMU_DESC_TYPE_BLOCK_DESC, .memAttrIdx = MMU_MAIR_IDX_DEVICE_MEM,              .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_NONE,  .accessedFlag = 1, .address = 0, .privExecNever = 1, .unprivExecNever = 1, .softwareUse = 0  }
+#define MMU_BLOCK_DESC_MEM_PRIVILEGED_SECURE_CACHEABLE      (mmuDescriptor_t){.descType = MMU_DESC_TYPE_PAGE_DESC,  .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_CACHEABLE,    .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_INNER, .accessedFlag = 1, .address = 0, .privExecNever = 0, .unprivExecNever = 0, .softwareUse = 0  }
+#define MMU_BLOCK_DESC_MEM_PRIVILEGED_SECURE_NONCACHEABLE   (mmuDescriptor_t){.descType = MMU_DESC_TYPE_PAGE_DESC,  .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_NONCACHEABLE, .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_INNER, .accessedFlag = 1, .address = 0, .privExecNever = 0, .unprivExecNever = 0, .softwareUse = 0  }
+#define MMU_BLOCK_DESC_MEM_UNPRIVILEGED_SECURE_CACHEABLE    (mmuDescriptor_t){.descType = MMU_DESC_TYPE_PAGE_DESC,  .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_CACHEABLE,    .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_INNER, .accessedFlag = 1, .address = 0, .privExecNever = 0, .unprivExecNever = 0, .softwareUse = 0  }
+#define MMU_BLOCK_DESC_MEM_UNPRIVILEGED_SECURE_NONCACHEABLE (mmuDescriptor_t){.descType = MMU_DESC_TYPE_PAGE_DESC,  .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_NONCACHEABLE, .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_INNER, .accessedFlag = 1, .address = 0, .privExecNever = 0, .unprivExecNever = 0, .softwareUse = 0  }
+#define MMU_BLOCK_DESC_DEVICE_MEM                           (mmuDescriptor_t){.descType = MMU_DESC_TYPE_PAGE_DESC,  .memAttrIdx = MMU_MAIR_IDX_DEVICE_MEM,              .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_NONE,  .accessedFlag = 1, .address = 0, .privExecNever = 1, .unprivExecNever = 1, .softwareUse = 0  }
 #define MMU_TABLE_DESC_NOT_PRESENT                          (mmuDescriptor_t){.descType = MMU_DESC_TYPE_INVALID_ENTRY }
 
 

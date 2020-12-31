@@ -22,6 +22,7 @@
 
 #include "types.h"
 #include "mmu.h"
+#include "memory.h"
 #include "mmu_private.h"
 
 uint32_t mmuEntriesPerPage  = 512;
@@ -210,7 +211,6 @@ void mmuTablePoolInit(uintptr_t tablePoolStart, uint64_t tablePoolSize)
 //-----------------------------------------------------------------------------
 void MmuInit(uintptr_t tablePoolStart, uintptr_t tablePoolSize)
 {
-
     mmuSetupTableConfiguration();
 
     mmuTablePoolInit(tablePoolStart, tablePoolSize);
@@ -228,7 +228,7 @@ void MmuInit(uintptr_t tablePoolStart, uintptr_t tablePoolSize)
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-void MmuMapRange(uintptr_t pageVirtAddr, uintptr_t pagePhysAddress, uintptr_t regionsSize, memoryRegionType_t regionType)
+void MmuMapRange(uintptr_t pageVirtAddr, uintptr_t pagePhysAddress, uintptr_t regionsSize, memoryTypes_t regionType)
 {
     uint32_t numPages = regionsSize/mmuPageSize;
     mmuDescriptor_t l1Attributes;
@@ -265,22 +265,28 @@ void MmuMapRange(uintptr_t pageVirtAddr, uintptr_t pagePhysAddress, uintptr_t re
 
     switch(regionType)
     {
-        case MEM_REGION_NORMAL_MEM_CACHEABLE:
+        case MEM_TYPE_NORMAL_MEMORY:
         {
             l3Attributes = MMU_BLOCK_DESC_MEM_PRIVILEGED_SECURE_CACHEABLE;
             break;
         }
 
-        case MEM_REGION_NORMAL_MEM_NONCACHEABLE:
+        case MEM_TYPE_NONCACHABLE:
+        case MEM_TYPE_VIDEO_MEMORY:
         {
             l3Attributes = MMU_BLOCK_DESC_MEM_PRIVILEGED_SECURE_NONCACHEABLE;
             break;
         }
 
-        case MEM_REGION_DEVICE_IO:
+        case MEM_TYPE_DEVICE_MEMORY:
         {
             l3Attributes = MMU_BLOCK_DESC_DEVICE_MEM;
             break;
+        }
+
+        case MEM_TYPE_NONE:
+        {
+            ASSERT(0);
         }
     }
 

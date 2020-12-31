@@ -20,13 +20,75 @@
 // THE SOFTWARE.
 //==============================================================================
 
-extern void platformInit(void);
+#include "types.h"
+#include "memory.h"
 
+#include "devices.h"
+#include "mmu.h"
+
+#include "int_handler.h"
+
+extern void platformInit(void);
+extern void appInit(void);
+
+extern device_t platformDeviceList[];
+
+
+
+// These externs are just here for a hack to test 
+extern void Gic400SoftwareInterrupt(uint32_t interrupt, uint32_t cpu);
+extern void GicIntCtrlrEnableInt(uint32_t interrupt, uint32_t priority, intHandler_t handler, void* context);
+
+
+// this is here just as a test of the interrupts
+void GicSoftIntandler(void * context)
+{
+    __asm(" B    . \n");        
+}
+
+//------------------------------------------------------------------------------
+// initialize the pools of Physical Memory
+//------------------------------------------------------------------------------
 void OsInit(void)
 {
     __asm(" B    . \n");
     platformInit();
+    memoryManagerInit();
 
+    uint32_t idx = 0;
+    while (platformDeviceList[idx].driverInit != NULL)
+    {
+        if (platformDeviceList[idx].mmio.memoryType != MEM_TYPE_NONE)
+        {
+            MmuMapRange(platformDeviceList[idx].mmio.memoryBase, platformDeviceList[idx].mmio.memoryBase, platformDeviceList[idx].mmio.memorySize, platformDeviceList[idx].mmio.memoryType);
+        }
+        if (platformDeviceList[idx].mem.memoryType != MEM_TYPE_NONE)
+        {
+            MmuMapRange(platformDeviceList[idx].mem.memoryBase, platformDeviceList[idx].mem.memoryBase, platformDeviceList[idx].mem.memorySize, platformDeviceList[idx].mem.memoryType);            
+        }
+
+        idx++;
+    }
+    MmuEnable();
+
+    idx = 0;
+    while (platformDeviceList[idx].driverInit != NULL)
+    {
+        platformDeviceList[idx].driverInit((void*)platformDeviceList[idx].mmio.memoryBase, 0);
+        idx++;
+    }
+
+#define SGI_0_INT_ID    (0)
+    //enable Software Interrupts
+    GicIntCtrlrEnableInt(SGI_0_INT_ID, 0, GicSoftIntandler, NULL);
+
+#define CPU_0_ID    (0)
+
+    Gic400SoftwareInterrupt(SGI_0_INT_ID, CPU_0_ID);
+
+
+    //memoryPoolsInit();
+    
 //  __ukEventsInit();               // ARC specific code
 //  __ukProcessManagementInit();    // SHOULD BE GENERIC
 //
@@ -34,11 +96,14 @@ void OsInit(void)
 //   // process_create(8, idleProc, &__idle_stack__);
 //    platform_start_cpus();
 
-//  appInit();
+    appInit();
 
 //    cpu_id_t id = arc_get_cpu_id();
 //    dm_DispatchProcess(id);
 
     // we should never get here, but we will hang here just in case. 
-    while(1){}
+    while(1)
+    {
+
+    }
 }

@@ -21,7 +21,7 @@
 #==============================================================================
 
 # Need to start passing this in.
-SUBDIRS := memory
+SUBDIRS := memory common_peripherals
 CSRC	:= 
 ASRC	:=
 

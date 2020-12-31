@@ -24,13 +24,18 @@
 #include "uktypes.h"
 #include "status.h"
 
-typedef status_t (*fpDiverInit_t)(void * mmio, uint32_t interrupt);
+//------------------------------------------------------------------------------
+// 
+//------------------------------------------------------------------------------
+typedef status_t (*fpDiverInit_t)(void * mmio_va, uint32_t interrupt);
 typedef status_t (*fpDriverDevControl_t)(uint32_t ioctl_num, void* arg1);
 typedef status_t (*fpDriverWrite_t)(uint8_t* data, uintptr_t size);
 typedef status_t (*fpDriverRead_t)(uint8_t* data, uintptr_t size);
 typedef status_t (*fpDriverPower_t)(uint32_t command, uint32_t arg);
 
-
+//------------------------------------------------------------------------------
+// 
+//------------------------------------------------------------------------------
 typedef struct
 {
     fpDiverInit_t           init;
@@ -40,15 +45,11 @@ typedef struct
     fpDriverRead_t          read;
 } _uKDriver_t;
 
-
-
 typedef enum
 {
     PWR_CMD_SET_POWER_ON,
     PWR_CMD_SET_PWER_OFF,
 } powerCommands_t;
-
-
 
 typedef enum
 {
@@ -64,9 +65,9 @@ typedef enum
     EMMC_TRANSFER_WRITE_DATA,
 } emmcCtrlrTransferType_t;
 
-
-
-
+//------------------------------------------------------------------------------
+// 
+//------------------------------------------------------------------------------
 typedef status_t (*fpEmmcCtrllInit)(uint32_t* mmio, uint32_t interrupt, uint32_t blkSize, uint32_t pagesToPreErase);
 typedef status_t (*fpEmmcCtrlrSetClockSpeed)(uint32_t clkInHz);
 typedef status_t (*fpEmmcCtrlrSetVoltage)(uint32_t voltIn10ths);
@@ -75,7 +76,6 @@ typedef status_t (*fpEmmcCtrlrGetResponse)(uint64_t* resp0, uint64_t* resp1);
 typedef status_t (*fpEmmcCtrlrSetDataBuffer)(uint8_t* buffer); // this should be a Scatter gather list
 typedef status_t (*fpEmmcCtrlrSetBlocksToPreErase)(uint32_t pagesToPreErase);
 typedef status_t (*fpInterruptHandler)(void);
-
 
 typedef struct 
 {

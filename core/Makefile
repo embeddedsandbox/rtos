@@ -20,23 +20,17 @@
 # THE SOFTWARE.
 #==============================================================================
 
-LIBRARY := $(BUILDROOT)/librtos.a
-SUBDIRS	:= init arc/$(ARC) core
-CSRC	:=
+# Need to start passing this in.
+CSRC	:= memory.c linkedlist.c
 ASRC	:=
-
-INC		+= -I./include
-
-.PHONY: all clean
+LIBRARY := 
+INC		+= -I../include
 
 include $(SRCROOT)/MAKE/RULES.MAK 
 
-all: $(SUBDIRS)
+.PHONY: all clean
+all: LIBRARY $(SUBDIRS) $(AOBJS)
 
 include $(SRCROOT)/MAKE/TARGETS.MAK
 
-clean: subdir_clean
-
-
-
-
+clean: local_clean_objs

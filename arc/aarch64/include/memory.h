@@ -19,30 +19,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 // THE SOFTWARE.
 //==============================================================================
+#ifndef __MEMORY_H__
+#define __MEMORY_H__
 
-#include "types.h"
+typedef enum 
+{
+    MEM_TYPE_NONE,
+    MEM_TYPE_NORMAL_MEMORY,
+    MEM_TYPE_NONCACHABLE,
+    MEM_TYPE_VIDEO_MEMORY,
+    MEM_TYPE_DEVICE_MEMORY,
+} memoryTypes_t;
 
-status_t Gic400DistributorInit(void* gicMmio, /*UNUSED*/ uint32_t interrupt);
-status_t Gic400CpuInit(void* gicMmio, /*UNUSED*/ uint32_t interrupt);
-void Gic400SoftwareInterrupt(uint32_t interrupt, uint32_t cpu);
+typedef struct
+{
+    uintptr_t   memoryBase;
+    uintptr_t   memorySize;
+    uintptr_t   memoryType;
+} memoryDescriptor_t;
 
-#define GIC_INTERRUPT_ID_MASK()
 
+void memoryManagerInit(void);
 
-
-#define SGI_0_INT_ID    (0)
-#define SGI_1_INT_ID    (1)
-#define SGI_2_INT_ID    (2)
-#define SGI_3_INT_ID    (3)
-#define SGI_4_INT_ID    (4)
-#define SGI_5_INT_ID    (5)
-#define SGI_6_INT_ID    (6)
-#define SGI_7_INT_ID    (7)
-#define SGI_8_INT_ID    (8)
-#define SGI_9_INT_ID    (9)
-#define SGI_10_INT_ID    (10)
-#define SGI_11_INT_ID    (11)
-#define SGI_12_INT_ID    (12)
-#define SGI_13_INT_ID    (13)
-#define SGI_14_INT_ID    (14)
-#define SGI_15_INT_ID    (15)
+#endif
+void memoryManagerInit(void);
