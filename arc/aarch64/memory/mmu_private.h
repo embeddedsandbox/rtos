@@ -87,17 +87,16 @@ typedef  mmuDescriptor_t* mmuPageHandle_t;
 
 #define MMU_TABLE_DESC                                      (mmuDescriptor_t){.descType = MMU_DESC_TYPE_TABLE_DESC, .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_CACHEABLE,    .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_INNER, .accessedFlag = 1, .address = 0, .privExecNever = 0, .unprivExecNever = 0, .softwareUse = 0  }
 #define MMU_BLOCK_DESC_MEM_PRIVILEGED_SECURE_CACHEABLE      (mmuDescriptor_t){.descType = MMU_DESC_TYPE_PAGE_DESC,  .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_CACHEABLE,    .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_INNER, .accessedFlag = 1, .address = 0, .privExecNever = 0, .unprivExecNever = 0, .softwareUse = 0  }
+#define MMU_BLOCK_DESC_MEM_PRIVILEGED_SECURE_CACHEABLE_RO   (mmuDescriptor_t){.descType = MMU_DESC_TYPE_PAGE_DESC,  .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_CACHEABLE,    .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RO, .shareability = MMU_DESC_SHARE_INNER, .accessedFlag = 1, .address = 0, .privExecNever = 0, .unprivExecNever = 0, .softwareUse = 0  }
 #define MMU_BLOCK_DESC_MEM_PRIVILEGED_SECURE_NONCACHEABLE   (mmuDescriptor_t){.descType = MMU_DESC_TYPE_PAGE_DESC,  .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_NONCACHEABLE, .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_INNER, .accessedFlag = 1, .address = 0, .privExecNever = 0, .unprivExecNever = 0, .softwareUse = 0  }
 #define MMU_BLOCK_DESC_MEM_UNPRIVILEGED_SECURE_CACHEABLE    (mmuDescriptor_t){.descType = MMU_DESC_TYPE_PAGE_DESC,  .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_CACHEABLE,    .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_INNER, .accessedFlag = 1, .address = 0, .privExecNever = 0, .unprivExecNever = 0, .softwareUse = 0  }
 #define MMU_BLOCK_DESC_MEM_UNPRIVILEGED_SECURE_NONCACHEABLE (mmuDescriptor_t){.descType = MMU_DESC_TYPE_PAGE_DESC,  .memAttrIdx = MMU_MAIR_IDX_NORMAL_MEM_NONCACHEABLE, .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_INNER, .accessedFlag = 1, .address = 0, .privExecNever = 0, .unprivExecNever = 0, .softwareUse = 0  }
 #define MMU_BLOCK_DESC_DEVICE_MEM                           (mmuDescriptor_t){.descType = MMU_DESC_TYPE_PAGE_DESC,  .memAttrIdx = MMU_MAIR_IDX_DEVICE_MEM,              .notSecure = 0, .accessPerission = MMU_DESC_AP_NOACCESS_RW, .shareability = MMU_DESC_SHARE_NONE,  .accessedFlag = 1, .address = 0, .privExecNever = 1, .unprivExecNever = 1, .softwareUse = 0  }
 #define MMU_TABLE_DESC_NOT_PRESENT                          (mmuDescriptor_t){.descType = MMU_DESC_TYPE_INVALID_ENTRY }
 
-
 //=============================================================================
 //  TCR_EL1 EQUATES 
 //=============================================================================
-
 typedef union
 {
     struct 

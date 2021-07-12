@@ -1,5 +1,5 @@
 //==============================================================================
-// Copyright 2020 Daniel Boals & Michael Boals
+// Copyright 2021 Daniel Boals & Michael Boals
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,28 +19,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 // THE SOFTWARE.
 //==============================================================================
-#ifndef __MEMORY_H__
-#define __MEMORY_H__
 
-typedef enum 
+
+void Pl011Init(void * baseAddress)
 {
-    MEM_TYPE_NONE,
-    MEM_TYPE_NORMAL_MEMORY,
-    MEM_TYPE_ROM,
-    MEM_TYPE_NONCACHABLE,
-    MEM_TYPE_VIDEO_MEMORY,
-    MEM_TYPE_DEVICE_MEMORY,
-} memoryTypes_t;
-
-typedef struct
-{
-    uintptr_t   memoryBase;
-    uintptr_t   memorySize;
-    uintptr_t   memoryType;
-} memoryDescriptor_t;
-
-
-void memoryManagerInit(void);
-
-#endif
-void memoryManagerInit(void);
+    
+}
