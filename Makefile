@@ -31,7 +31,7 @@ INC		+= -I./include
 
 include $(SRCROOT)/MAKE/RULES.MAK 
 
-all: $(SUBDIRS)
+all: $(BUILDDIR) $(SUBDIRS)
 
 include $(SRCROOT)/MAKE/TARGETS.MAK
 
