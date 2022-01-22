@@ -23,10 +23,11 @@
 
 #include "mmu.h"
 #include "memory.h"
+//#include "platform.h"
 
 // This rubbish needs to be cleaned up.  We need to be pulling the gTopOfMemory from the list of memory
 extern memoryDescriptor_t  platformMemory[];
-extern uintptr_t gTopOfMemory;
+//extern uintptr_t gTopOfMemory;
 
 //------------------------------------------------------------------------------
 // initialize the pools of Physical Memory
@@ -35,7 +36,6 @@ extern uintptr_t gTopOfMemory;
 //------------------------------------------------------------------------------
 void memoryManagerInit(void)
 {
-    MmuInit(gTopOfMemory - ((100) * (1024) * (1024)) + 1, ((100) * (1024) * (1024))); 
 
     uint32_t idx = 0;
     while (platformMemory[idx].memoryBase != -1)

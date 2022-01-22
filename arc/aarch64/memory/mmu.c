@@ -271,6 +271,12 @@ void MmuMapRange(uintptr_t pageVirtAddr, uintptr_t pagePhysAddress, uintptr_t re
             break;
         }
 
+        case MEM_TYPE_ROM:
+        {
+            l3Attributes = MMU_BLOCK_DESC_MEM_PRIVILEGED_SECURE_CACHEABLE_RO;
+            break;
+        }
+
         case MEM_TYPE_NONCACHABLE:
         case MEM_TYPE_VIDEO_MEMORY:
         {
